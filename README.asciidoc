@@ -1,0 +1,7 @@
+= itslychee/nvim
+
+My neovim configuration, repurposed from my nixos config into its own repository to provide a set of packages
+suited for different environments, simply to keep my closures lean.
+
+This is meant for my own use, but if you experience any issues, file an issue so I
+can figure out it may affect me.
