@@ -42,7 +42,6 @@ api.nvim_create_autocmd("LspAttach", {
         desc = "[" .. kmType .. "] " .. description,
       })
     end
-    lsp("LSP", "<leader>D", vim.lsp.buf.type_definition, "Type Definition")
     lsp("LSP", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
     lsp("LSP", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
     lsp("LSP", "gd", vim.lsp.buf.declaration, "Goto declaration")
