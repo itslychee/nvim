@@ -8,6 +8,7 @@
   lib,
   # third party programs
   ripgrep,
+  alejandra,
   nil,
   # Extend the base derivation
   grammars ? vimPlugins.nvim-treesitter.withAllGrammars,
@@ -67,6 +68,7 @@ in
       # binaries that are convenient :3
       ripgrep
       nil
+      alejandra
     ]))
   ];
 })
