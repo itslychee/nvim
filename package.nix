@@ -12,10 +12,11 @@
   nil,
   # Extend the base derivation
   grammars ? vimPlugins.nvim-treesitter.withAllGrammars,
-  extraPlugins ? [],
-  extraBinaries ? [],
+  extraPlugins ? [ ],
+  extraBinaries ? [ ],
   ...
-}: let
+}:
+let
   inherit (lib) flatten makeBinPath;
   config = neovimUtils.makeNeovimConfig {
     plugins = lib.singleton (
@@ -24,10 +25,9 @@
         src = ./nvim;
         dependencies = flatten (
           builtins.attrValues {
-            inherit
-              (vimPlugins)
+            inherit (vimPlugins)
               # nvim-cmp, autocompletion stuffs
-              
+
               cmp-async-path
               cmp-buffer
               cmp-cmdline
@@ -35,17 +35,17 @@
               nvim-cmp
               luasnip
               # LSPs
-              
+
               nvim-lspconfig
               # Formatting
-              
+
               conform-nvim
               # misc
-              
+
               mini-nvim
               nvim-ts-context-commentstring
               # conveniences
-              
+
               lualine-nvim
               ;
             inherit extraPlugins;
@@ -57,19 +57,17 @@
     wrapRc = false;
   };
 in
-  (wrapNeovimUnstable neovim-unwrapped config).overrideAttrs (prev: {
-    generatedWrapperArgs =
-      (prev.generatedWrapperArgs or [])
-      ++ [
-        "--suffix"
-        "PATH"
-        ":"
-        (makeBinPath (flatten [
-          (builtins.trace extraBinaries extraBinaries)
-          # binaries that are convenient :3
-          ripgrep
-          nil
-          nixfmt-rfc-style
-        ]))
-      ];
-  })
+(wrapNeovimUnstable neovim-unwrapped config).overrideAttrs (prev: {
+  generatedWrapperArgs = (prev.generatedWrapperArgs or [ ]) ++ [
+    "--suffix"
+    "PATH"
+    ":"
+    (makeBinPath (flatten [
+      extraBinaries
+      # binaries that are convenient :3
+      ripgrep
+      nil
+      nixfmt-rfc-style
+    ]))
+  ];
+})
