@@ -8,6 +8,7 @@ require("conform").setup {
     sql = { "sql_formatter" },
     html = {"djlint"},
     json = { "jq" },
+    typst = { "typstyle "},
     javascript = { "prettierd", "prettier", stop_after_first = true },
     typescript = { "prettierd", "prettier", stop_after_first = true },
     ["*"] = { "injected" },

@@ -10,7 +10,7 @@ function safe_setup(module, params)
 	end
 end
 
--- Theme setup!
+ -- Theme setup!
 o.background = "dark"
 pcall(vim.cmd, "colorscheme kanagawa")
 
