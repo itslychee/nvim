@@ -70,6 +70,11 @@
         }
       );
 
+      devShells = eachSystem (pkgs: {
+        default = pkgs.mkShell {
+          packages = [ pkgs.stylua ];
+        };
+      });
       # Formatter
       formatter = eachSystem (pkgs: pkgs.nixfmt-rfc-style);
     };
