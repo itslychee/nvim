@@ -51,7 +51,7 @@
                 djlint
                 jq
                 typst-lsp
-                typstfmt
+                typstyle
                 typst-live
                 ;
 
