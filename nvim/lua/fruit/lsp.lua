@@ -9,6 +9,7 @@ local LSPs = {
 	"pyright",
 	"typst_lsp",
 	"ruff_lsp",
+	"ts_ls",
 	"eslint",
 	"rust_analyzer",
 }

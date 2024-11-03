@@ -43,9 +43,8 @@
               });
             extraBinaries = attrValues {
               inherit (pkgs.nodePackages_latest)
-                typescript-language-server
-                sql-formatter
                 prettier
+                sql-formatter
                 ;
               inherit (pkgs)
                 djlint
