@@ -62,6 +62,9 @@ require("mini.files").setup({
 		permanent_delete = true,
 		use_as_default_explorer = true,
 	},
+	mappings = {
+		close = "<Esc>",
+	},
 })
 
 local sections = {
