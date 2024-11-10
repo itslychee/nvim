@@ -92,4 +92,6 @@ require("lualine").setup({
 	inactive_sections = sections,
 })
 
-k("n", "-", require("mini.files").open)
+k("n", "-", function()
+	require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+end)
