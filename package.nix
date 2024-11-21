@@ -34,6 +34,7 @@ let
               cmp-nvim-lsp
               nvim-cmp
               luasnip
+              vim-gnupg
               # LSPs
 
               nvim-lspconfig
