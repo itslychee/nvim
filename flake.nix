@@ -78,21 +78,5 @@
       });
       # Formatter
       formatter = eachSystem (pkgs: pkgs.nixfmt-rfc-style);
-      typhonJobs = self.packages;
-      typhonProject = typhon.lib.github.mkProject {
-        owner = "itslychee";
-        repo = "nvim";
-        secrets = ./secrets.age;
-        typhonUrl = "https://ci.wires.cafe";
-        deploy = [
-          {
-            name = "Push to Attic";
-            value = typhon.lib.attic.mkPush {
-              endpoint = "https://cache.wires.cafe";
-              cache = "lychee-config";
-            };
-          }
-        ];
-      };
     };
 }
