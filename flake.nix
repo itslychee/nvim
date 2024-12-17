@@ -9,7 +9,6 @@
     {
       self,
       nixpkgs,
-      typhon,
     }:
     let
       inherit (nixpkgs.lib) genAttrs;
