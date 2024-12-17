@@ -3,7 +3,6 @@
     # nixos-unstable provides latest packages while being somewhat
     # stable despite its name.
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
-    typhon.url = "github:itslychee/typhon?ref=itslychee/random-fixes-and-additions";
   };
 
   outputs =
