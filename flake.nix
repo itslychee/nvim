@@ -49,7 +49,7 @@
               inherit (pkgs)
                 djlint
                 jq
-                typst-lsp
+                tinymist
                 typstyle
                 typst-live
                 ;
