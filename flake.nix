@@ -39,6 +39,7 @@
                   git-conflict-nvim
                   vim-fugitive
                   typescript-tools-nvim
+                  vim-jinja
                   ;
               });
             extraBinaries = attrValues {
