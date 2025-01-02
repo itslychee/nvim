@@ -32,6 +32,7 @@ o.signcolumn = "yes"
 o.completeopt = "menu,menuone,noinsert"
 o.showbreak = "↪ "
 o.list = true
+o.autoindent = true
 o.listchars = "lead:.,tab:▎·,trail:."
 
 vim.g.mapleader = " "
