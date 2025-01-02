@@ -23,6 +23,7 @@ let
       vimUtils.buildVimPlugin {
         name = "fruit-nvim-config";
         src = ./nvim;
+        doCheck = false;
         dependencies = flatten (
           builtins.attrValues {
             inherit (vimPlugins)
@@ -55,20 +56,16 @@ let
         );
       }
     );
+    runtimeDeps = (
+      makeBinPath (flatten [
+        extraBinaries
+        # binaries that are convenient :3
+        ripgrep
+        nil
+        nixfmt-rfc-style
+      ])
+    );
     wrapRc = false;
   };
 in
-(wrapNeovimUnstable neovim-unwrapped config).overrideAttrs (prev: {
-  generatedWrapperArgs = (prev.generatedWrapperArgs or [ ]) ++ [
-    "--suffix"
-    "PATH"
-    ":"
-    (makeBinPath (flatten [
-      extraBinaries
-      # binaries that are convenient :3
-      ripgrep
-      nil
-      nixfmt-rfc-style
-    ]))
-  ];
-})
+(wrapNeovimUnstable neovim-unwrapped config)
