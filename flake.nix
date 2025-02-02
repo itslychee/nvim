@@ -53,6 +53,7 @@
                 tinymist
                 typstyle
                 typst-live
+                nil
                 ;
 
             };
