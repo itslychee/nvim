@@ -94,5 +94,11 @@ require("lualine").setup({
 })
 
 k("n", "-", function()
-	require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+	local files = require("mini.files")
+	local exists = vim.fn.filereadable(vim.fn.expand(vim.api.nvim_buf_get_name(0)))
+	if exists == 1 then
+		files.open(vim.fn.expand(vim.api.nvim_buf_get_name(0), false))
+	else
+		files.open()
+	end
 end)
