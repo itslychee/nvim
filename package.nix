@@ -56,16 +56,18 @@ let
         );
       }
     );
-    runtimeDeps = (
-      makeBinPath (flatten [
-        extraBinaries
-        # binaries that are convenient :3
-        ripgrep
-        nil
-        nixfmt-rfc-style
-      ])
-    );
+
     wrapRc = false;
   };
 in
-(wrapNeovimUnstable neovim-unwrapped config)
+((wrapNeovimUnstable neovim-unwrapped config).overrideAttrs {
+  runtimeDeps = (
+    flatten [
+      extraBinaries
+      # binaries that are convenient :3
+      ripgrep
+      nil
+      nixfmt-rfc-style
+    ]
+  );
+})
