@@ -1,7 +1,7 @@
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
-		python = { "ruff_fix", "ruff_format" },
+		python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
 		nix = { "nixfmt" },
 		go = { "goimports", "gofmt" },
 		rust = { "rustfmt", lsp_format = "fallback" },
@@ -11,6 +11,7 @@ require("conform").setup({
 		typst = { "typstyle" },
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 		typescript = { "prettierd", "prettier", stop_after_first = true },
+		yaml = { "yamlfix", "ansible-lint" },
 		["*"] = { "injected" },
 		["_"] = { "trim_whitespace", "trim_newlines" },
 	},

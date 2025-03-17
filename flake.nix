@@ -51,6 +51,7 @@
                 djlint
                 jq
                 tinymist
+                ansible-lint
                 typstyle
                 typst-live
                 nil
