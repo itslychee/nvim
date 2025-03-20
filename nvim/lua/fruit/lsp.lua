@@ -13,10 +13,10 @@ local LSPs = {
 	"eslint",
 	"rust_analyzer",
 }
-local caps = require("cmp_nvim_lsp").default_capabilities()
+-- local caps = require("cmp_nvim_lsp").default_capabilities()
 for _, server in ipairs(LSPs) do
 	lspconfig[server].setup({
-		capabilities = caps,
+		capabilities = require("blink.cmp").get_lsp_capabilities(),
 	})
 end
 
@@ -26,17 +26,19 @@ api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		local bufnr = ev.buf
-
 		vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr"
-		if client.supports_method("textDocument/completion") then
-			vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-		end
-		if client.supports_method("textDocument/definition") then
-			vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+		if client ~= nil then
+			if client.supports_method("textDocument/completion") then
+				vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+			end
+			if client.supports_method("textDocument/definition") then
+				vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+			end
 		end
 
 		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
+		---@diagnostic disable-next-line: lowercase-global
 		function lsp(kmType, keymap, func, description)
 			k("n", keymap, func, {
 				buffer = ev.buf,
@@ -62,37 +64,55 @@ api.nvim_create_autocmd("LspAttach", {
 })
 
 -- Autocompletion
-local cmp = require("cmp")
-local mappin = cmp.mapping
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			vim.snippet.expand(args.body)
-		end,
-	},
-	mapping = mappin.preset.insert({
-		["<C-k>"] = mappin.select_prev_item(), -- previous suggestion
-		["<C-j>"] = mappin.select_next_item(), -- next suggestion
-		["<C-b>"] = mappin.scroll_docs(-4),
-		["<C-f>"] = mappin.scroll_docs(4),
-		["<C-Space>"] = mappin.complete(), -- show completion suggestions
-		["<C-c>"] = mappin.abort(), -- close completion window
-		["<CR>"] = mappin.confirm({ select = true }),
-	}),
-	-- sources for autocompletion
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "async_path" },
-		{ name = "buffer" },
-	}),
-})
+-- local cmp = require("cmp")
+-- local mappin = cmp.mapping
+-- cmp.setup({
+-- 	snippet = {
+-- 		expand = function(args)
+-- 			vim.snippet.expand(args.body)
+-- 		end,
+-- 	},
+-- 	mapping = mappin.preset.insert({
+-- 		["<C-k>"] = mappin.select_prev_item(), -- previous suggestion
+-- 		["<C-j>"] = mappin.select_next_item(), -- next suggestion
+-- 		["<C-b>"] = mappin.scroll_docs(-4),
+-- 		["<C-f>"] = mappin.scroll_docs(4),
+-- 		["<C-Space>"] = mappin.complete(), -- show completion suggestions
+-- 		["<C-c>"] = mappin.abort(), -- close completion window
+-- 		["<CR>"] = mappin.confirm({ select = true }),
+-- 	}),
+-- 	-- sources for autocompletion
+-- 	sources = cmp.config.sources({
+-- 		{ name = "nvim_lsp" },
+-- 		{ name = "async_path" },
+-- 		{ name = "buffer" },
+-- 	}),
+-- })
 
-cmp.setup.cmdline(":", {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = "async_path" },
-		{ name = "cmdline" },
-	}),
+-- cmp.setup.cmdline(":", {
+-- 	mapping = cmp.mapping.preset.cmdline(),
+-- 	sources = cmp.config.sources({
+-- 		{ name = "async_path" },
+-- 		{ name = "cmdline" },
+-- 	}),
+-- })
+--
+local blink = require("blink.cmp")
+blink.setup({
+	completion = {
+		documentation = {
+			auto_show = true,
+		},
+		list = {
+			selection = {
+				preselect = false,
+				auto_insert = true,
+			},
+		},
+	},
+	cmdline = {
+		completion = { menu = { auto_show = true } },
+	},
 })
 
 require("typescript-tools").setup({
@@ -112,5 +132,50 @@ require("typescript-tools").setup({
 			allowIncompleteCompletions = false,
 			allowRenameOfImportPath = false,
 		},
+	},
+})
+
+local runtime_files = vim.api.nvim_get_runtime_file("", true)
+for key, v in ipairs(runtime_files) do
+	if string.find(v, "fruit") or string.find(v, "treesitter") then
+		table.remove(runtime_files, key)
+	end
+end
+
+-- I hate guessing
+require("lspconfig").lua_ls.setup({
+	on_init = function(client)
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if
+				path ~= vim.fn.stdpath("config")
+				and (vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc"))
+			then
+				return
+			end
+		end
+
+		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+			runtime = {
+				-- Tell the language server which version of Lua you're using
+				-- (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+			},
+			-- Make the server aware of Neovim runtime files
+			workspace = {
+				checkThirdParty = false,
+				-- library = {
+				-- 	vim.env.VIMRUNTIME,
+				-- 	-- Depending on the usage, you might want to add additional paths here.
+				-- 	-- "${3rd}/luv/library"
+				-- 	-- "${3rd}/busted/library",
+				-- },
+				-- -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+				library = runtime_files,
+			},
+		})
+	end,
+	settings = {
+		Lua = {},
 	},
 })

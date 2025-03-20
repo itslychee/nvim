@@ -48,6 +48,7 @@
                 sql-formatter
                 ;
               inherit (pkgs)
+                lua-language-server
                 djlint
                 jq
                 tinymist
