@@ -3,13 +3,15 @@
     # nixos-unstable provides latest packages while being somewhat
     # stable despite its name.
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+    nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs =
     {
       self,
+      nightly,
       nixpkgs,
-    }:
+    }@inputs:
     let
       inherit (nixpkgs.lib) genAttrs;
       systems = [
@@ -27,7 +29,9 @@
         in
         rec {
           #
-          base = pkgs.callPackage ./package.nix { };
+          base = pkgs.callPackage ./package.nix {
+            neovim-unwrapped = inputs.nightly.packages.${pkgs.system}.default;
+          };
           full = minimal.override (prev: {
             extraPlugins =
               prev.extraPlugins
