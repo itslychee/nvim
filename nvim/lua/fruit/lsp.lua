@@ -15,6 +15,7 @@ local LSPs = {
 }
 local caps = require("cmp_nvim_lsp").default_capabilities()
 -- local caps = require("blink.cmp").get_lsp_capabilities()
+caps.textDocument.completion.completionItem.snippetSupport = false
 
 for _, server in ipairs(LSPs) do
 	lspconfig[server].setup({
@@ -85,7 +86,12 @@ cmp.setup({
 	}),
 	-- sources for autocompletion
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
+		{
+			name = "nvim_lsp",
+			entry_filter = function(entry, ctx)
+				return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+			end,
+		},
 		{ name = "async_path" },
 		{ name = "buffer" },
 	}),
