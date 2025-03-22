@@ -13,10 +13,12 @@ local LSPs = {
 	"eslint",
 	"rust_analyzer",
 }
--- local caps = require("cmp_nvim_lsp").default_capabilities()
+local caps = require("cmp_nvim_lsp").default_capabilities()
+-- local caps = require("blink.cmp").get_lsp_capabilities()
+
 for _, server in ipairs(LSPs) do
 	lspconfig[server].setup({
-		capabilities = require("blink.cmp").get_lsp_capabilities(),
+		capabilities = caps,
 	})
 end
 
@@ -64,57 +66,57 @@ api.nvim_create_autocmd("LspAttach", {
 })
 
 -- Autocompletion
--- local cmp = require("cmp")
--- local mappin = cmp.mapping
--- cmp.setup({
--- 	snippet = {
--- 		expand = function(args)
--- 			vim.snippet.expand(args.body)
--- 		end,
--- 	},
--- 	mapping = mappin.preset.insert({
--- 		["<C-k>"] = mappin.select_prev_item(), -- previous suggestion
--- 		["<C-j>"] = mappin.select_next_item(), -- next suggestion
--- 		["<C-b>"] = mappin.scroll_docs(-4),
--- 		["<C-f>"] = mappin.scroll_docs(4),
--- 		["<C-Space>"] = mappin.complete(), -- show completion suggestions
--- 		["<C-c>"] = mappin.abort(), -- close completion window
--- 		["<CR>"] = mappin.confirm({ select = true }),
--- 	}),
--- 	-- sources for autocompletion
--- 	sources = cmp.config.sources({
--- 		{ name = "nvim_lsp" },
--- 		{ name = "async_path" },
--- 		{ name = "buffer" },
--- 	}),
--- })
-
--- cmp.setup.cmdline(":", {
--- 	mapping = cmp.mapping.preset.cmdline(),
--- 	sources = cmp.config.sources({
--- 		{ name = "async_path" },
--- 		{ name = "cmdline" },
--- 	}),
--- })
---
-local blink = require("blink.cmp")
-blink.setup({
-	completion = {
-		documentation = {
-			auto_show = true,
-		},
-		list = {
-			selection = {
-				preselect = false,
-				auto_insert = true,
-			},
-		},
+local cmp = require("cmp")
+local mappin = cmp.mapping
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			vim.snippet.expand(args.body)
+		end,
 	},
-	cmdline = {
-		completion = { menu = { auto_show = true } },
-	},
+	mapping = mappin.preset.insert({
+		["<C-k>"] = mappin.select_prev_item(), -- previous suggestion
+		["<C-j>"] = mappin.select_next_item(), -- next suggestion
+		["<C-b>"] = mappin.scroll_docs(-4),
+		["<C-f>"] = mappin.scroll_docs(4),
+		["<C-Space>"] = mappin.complete(), -- show completion suggestions
+		["<C-c>"] = mappin.abort(), -- close completion window
+		["<CR>"] = mappin.confirm({ select = true }),
+	}),
+	-- sources for autocompletion
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "async_path" },
+		{ name = "buffer" },
+	}),
 })
 
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "async_path" },
+		{ name = "cmdline" },
+	}),
+})
+
+-- local blink = require("blink.cmp")
+-- blink.setup({
+-- 	completion = {
+-- 		documentation = {
+-- 			auto_show = true,
+-- 		},
+-- 		list = {
+-- 			selection = {
+-- 				preselect = false,
+-- 				auto_insert = true,
+-- 			},
+-- 		},
+-- 	},
+-- 	cmdline = {
+-- 		completion = { menu = { auto_show = true } },
+-- 	},
+-- })
+--
 require("typescript-tools").setup({
 	cmd = {
 		"typescript-language-server",
