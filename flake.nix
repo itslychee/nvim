@@ -55,6 +55,8 @@
                 lua-language-server
                 djlint
                 jq
+                rust-analyzer
+                rustfmt
                 tinymist
                 ansible-lint
                 typstyle
