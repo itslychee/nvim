@@ -1,4 +1,7 @@
 local pick = require("mini.pick")
+
+vim.o.smartcase = true
+
 pick.setup({
     options = {
         use_cache = true,
