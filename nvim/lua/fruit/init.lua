@@ -42,6 +42,7 @@ require("fruit.lsp")
 require("fruit.git")
 require("fruit.formatting")
 require("fruit.pickin")
+require("fruit.writing")
 require("fruit.treesitter")
 
 safe_setup("which-key")
