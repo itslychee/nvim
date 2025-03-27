@@ -44,6 +44,7 @@
                   vim-fugitive
                   typescript-tools-nvim
                   vim-jinja
+                  harpoon2
                   ;
               });
             extraBinaries = attrValues {
@@ -62,6 +63,8 @@
                 typstyle
                 typst-live
                 nil
+                deadnix
+                statix
                 ;
 
             };

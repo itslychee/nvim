@@ -1,6 +1,4 @@
-local cmd = vim.cmd
 local o = vim.opt
-local api = vim.api
 local k = vim.keymap.set
 
 function safe_setup(module, params)
@@ -17,6 +15,7 @@ pcall(vim.cmd, "colorscheme kanagawa")
 -- Options
 o.splitbelow = true
 o.wrap = false
+o.exrc = true
 o.number = true
 o.relativenumber = true
 o.expandtab = true
@@ -43,6 +42,7 @@ require("fruit.git")
 require("fruit.formatting")
 require("fruit.pickin")
 require("fruit.writing")
+require("fruit.completions")
 require("fruit.treesitter")
 
 safe_setup("which-key")

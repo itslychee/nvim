@@ -29,13 +29,13 @@ let
             inherit (vimPlugins)
               # nvim-cmp, autocompletion stuffs
 
-              cmp-async-path
-              cmp-buffer
-              cmp-cmdline
-              cmp-nvim-lsp
-              nvim-cmp
-              # blink-cmp
-              luasnip
+              # cmp-async-path
+              # cmp-buffer
+              # cmp-cmdline
+              # cmp-nvim-lsp
+              # nvim-cmp
+              blink-cmp
+              # luasnip
               vim-gnupg
               # LSPs
 
@@ -46,6 +46,7 @@ let
               # misc
 
               mini-nvim
+              nvim-lint
               nvim-ts-context-commentstring
               # conveniences
 
