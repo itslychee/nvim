@@ -13,11 +13,8 @@ local LSPs = {
     "eslint",
     "rust_analyzer",
 }
--- local caps = require("cmp_nvim_lsp").default_capabilities()
-local caps = require("blink.cmp").get_lsp_capabilities()
-
--- https://github.com/hrsh7th/nvim-cmp/discussions/759
-caps.textDocument.completion.completionItem.snippetSupport = false
+local caps = require("cmp_nvim_lsp").default_capabilities()
+-- local caps = require("blink.cmp").get_lsp_capabilities()
 
 for _, server in ipairs(LSPs) do
     lspconfig[server].setup({
@@ -87,17 +84,17 @@ require("typescript-tools").setup({
     },
 })
 
-
 -- I hate guessing
 require("lspconfig").lua_ls.setup({
     capabilities = caps,
     on_init = function(client)
-
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-            runtime = { version = "LuaJIT", },
+            runtime = { version = "LuaJIT" },
             workspace = {
                 checkThirdParty = false,
-                library = vim.api.nvim_get_runtime_file("", true),
+                library = {
+                    vim.env.VIMRUNTIME,
+                },
             },
         })
     end,
@@ -106,13 +103,12 @@ require("lspconfig").lua_ls.setup({
     },
 })
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  callback = function()
-
-    -- try_lint without arguments runs the linters defined in `linters_by_ft`
-    -- for the current filetype
-    require("lint").try_lint()
-    -- -- You can call `try_lint` with a linter name or a list of names to always
-    -- -- run specific linters, independent of the `linters_by_ft` configuration
-    -- require("lint").try_lint("cspell")
-  end,
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
+        -- -- You can call `try_lint` with a linter name or a list of names to always
+        -- -- run specific linters, independent of the `linters_by_ft` configuration
+        -- require("lint").try_lint("cspell")
+    end,
 })

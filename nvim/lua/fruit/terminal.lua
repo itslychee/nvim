@@ -18,6 +18,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 local k = vim.keymap.set
+
 k("n", "<leader>t", vim.cmd.terminal, { desc = "Open Terminal" })
 -- Add easy escape functionality like in INSERT mode
 -- C-\ C-N is really annoying

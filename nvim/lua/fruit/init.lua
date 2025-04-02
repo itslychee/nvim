@@ -8,7 +8,6 @@ function safe_setup(module, params)
     end
 end
 
--- Theme setup!
 o.background = "dark"
 pcall(vim.cmd, "colorscheme kanagawa")
 
@@ -36,6 +35,7 @@ o.listchars = "lead:.,tab:▎·,trail:."
 
 vim.g.mapleader = " "
 
+require("fruit.snippets")
 require("fruit.terminal")
 require("fruit.lsp")
 require("fruit.git")
