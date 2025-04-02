@@ -62,7 +62,8 @@ api.nvim_create_autocmd("LspAttach", {
         -- Diagnostics
         lsp("Diagnostics", "<leader>s", vim.diagnostic.setloclist, "Overview")
         lsp("Diagnostics", "<leader>a", vim.diagnostic.open_float, "Expand error")
-
+        lsp("Diagnostics", "<leader>e", vim.diagnostic.goto_prev, "Go to previous error")
+        lsp("Diagnostics", "<leader>i", vim.diagnostic.goto_next, "Go to next error")
     end,
 })
 require("typescript-tools").setup({
