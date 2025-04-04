@@ -22,6 +22,12 @@ for _, server in ipairs(LSPs) do
     })
 end
 
+vim.diagnostic.config({
+    virtual_lines = {
+        only_current_line = true,
+    },
+})
+
 -- LSP setup
 api.nvim_create_autocmd("LspAttach", {
     group = api.nvim_create_augroup("UserLspConfig", {}),
@@ -30,10 +36,10 @@ api.nvim_create_autocmd("LspAttach", {
         local bufnr = ev.buf
         vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr"
         if client ~= nil then
-            if client.supports_method("textDocument/completion", bufnr) then
+            if client:supports_method("textDocument/completion", bufnr) then
                 vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
             end
-            if client.supports_method("textDocument/definition", bufnr) then
+            if client:supports_method("textDocument/definition", bufnr) then
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end
         end
@@ -59,8 +65,9 @@ api.nvim_create_autocmd("LspAttach", {
         -- Diagnostics
         lsp("Diagnostics", "<leader>s", vim.diagnostic.setloclist, "Overview")
         lsp("Diagnostics", "<leader>a", vim.diagnostic.open_float, "Expand error")
-        lsp("Diagnostics", "<leader>e", vim.diagnostic.goto_prev, "Go to previous error")
-        lsp("Diagnostics", "<leader>i", vim.diagnostic.goto_next, "Go to next error")
+        -- deprecated,
+        -- lsp("Diagnostics", "<leader>e", vim.diagnostic.goto_prev, "Go to previous error")
+        -- lsp("Diagnostics", "<leader>i", vim.diagnostic.goto_next, "Go to next error")
     end,
 })
 require("typescript-tools").setup({
