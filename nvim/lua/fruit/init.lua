@@ -89,7 +89,7 @@ local sections = {
 }
 
 require("lualine").setup({
-    options = { theme = "material" },
+    options = { theme = "dracula" },
     sections = sections,
     inactive_sections = sections,
 })
