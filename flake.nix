@@ -51,11 +51,13 @@
               inherit (pkgs.nodePackages_latest)
                 prettier
                 sql-formatter
+                jsonlint
                 ;
               inherit (pkgs)
                 lua-language-server
                 djlint
                 jq
+                yq
                 rust-analyzer
                 rustfmt
                 tinymist
