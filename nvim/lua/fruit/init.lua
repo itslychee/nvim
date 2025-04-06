@@ -89,6 +89,8 @@ local sections = {
     lualine_z = { "branch", "diff", "diagnostics" },
 }
 
+require("fidget").setup()
+
 require("lualine").setup({
     options = { theme = "dracula" },
     sections = sections,

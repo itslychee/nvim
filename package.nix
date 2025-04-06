@@ -50,6 +50,7 @@ let
               nvim-ts-context-commentstring
               # conveniences
 
+              fidget-nvim
               lualine-nvim
               ;
             inherit extraPlugins;
