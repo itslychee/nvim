@@ -30,6 +30,5 @@ vim.keymap.set("n", "<leader>o", function()
 end, {
     noremap = true,
     silent = true,
-    buffer = bufnr,
     desc = "Format document",
 })
