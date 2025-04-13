@@ -1,6 +1,7 @@
-require("ts_context_commentstring").setup({
-    enable_autocmd = false,
-})
+-- require("ts_context_commentstring").setup({
+--     enable_autocmd = false,
+-- })
+-- is this even needed?
 success, val = pcall(require, "nvim-treesitter.configs")
 if success then
     val.setup({

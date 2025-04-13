@@ -28,7 +28,6 @@ let
           builtins.attrValues {
             inherit (vimPlugins)
               # nvim-cmp, autocompletion stuffs
-
               cmp-async-path
               cmp-buffer
               cmp-cmdline
@@ -38,18 +37,14 @@ let
               friendly-snippets
               vim-gnupg
               # LSPs
-
               nvim-lspconfig
               # Formatting
-
               conform-nvim
               # misc
-
               mini-nvim
               nvim-lint
-              nvim-ts-context-commentstring
+              # nvim-ts-context-commentstring
               # conveniences
-
               fidget-nvim
               lualine-nvim
               ;
