@@ -23,7 +23,6 @@ for _, server in ipairs(LSPs) do
 end
 
 vim.diagnostic.config({
-    virtual_lines = { current_line = true },
     virtual_text = {},
     severity_sort = true,
     underline = true,
