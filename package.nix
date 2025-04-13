@@ -17,7 +17,7 @@
   ...
 }:
 let
-  inherit (lib) flatten makeBinPath;
+  inherit (lib) flatten;
   config = neovimUtils.makeNeovimConfig {
     plugins = lib.singleton (
       vimUtils.buildVimPlugin {
@@ -58,14 +58,12 @@ let
     wrapRc = false;
   };
 in
-((wrapNeovimUnstable neovim-unwrapped config).overrideAttrs {
-  runtimeDeps = (
-    flatten [
-      extraBinaries
-      # binaries that are convenient :3
-      ripgrep
-      nil
-      nixfmt-rfc-style
-    ]
-  );
-})
+(wrapNeovimUnstable neovim-unwrapped config).overrideAttrs {
+  runtimeDeps = flatten [
+    extraBinaries
+    # binaries that are convenient :3
+    ripgrep
+    nil
+    nixfmt-rfc-style
+  ];
+}
