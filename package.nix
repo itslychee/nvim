@@ -42,8 +42,9 @@ let
               conform-nvim
               # misc
               mini-nvim
+              nvim-ts-autotag
               nvim-lint
-              # nvim-ts-context-commentstring
+              nvim-ts-context-commentstring
               # conveniences
               fidget-nvim
               lualine-nvim

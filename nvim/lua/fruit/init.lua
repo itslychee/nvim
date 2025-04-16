@@ -48,13 +48,6 @@ require("fruit.treesitter")
 
 safe_setup("which-key")
 safe_setup("colorizer")
-require("mini.comment").setup({
-    options = {
-        custom_commentstring = function()
-            return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
-        end,
-    },
-})
 require("mini.files").setup({
     windows = {
         max_number = 3,

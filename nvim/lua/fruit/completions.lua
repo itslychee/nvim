@@ -62,3 +62,33 @@ cmp.setup.cmdline(":", {
         { name = "cmdline" },
     }),
 })
+
+require("nvim-ts-autotag").setup({
+    opts = {
+        -- Defaults
+        enable_close = true, -- Auto close tags
+        enable_rename = true, -- Auto rename pairs of tags
+        enable_close_on_slash = false, -- Auto close on trailing </
+    },
+    -- Also override individual filetype configs, these take priority.
+    -- Empty by default, useful if one of the "opts" global settings
+    -- doesn't work well in a specific filetype
+    -- per_filetype = {
+    --     ["html"] = {
+    --         enable_close = false,
+    --     },
+    -- },
+})
+
+-- https://github.com/JoosepAlviste/nvim-ts-context-commentstring/wiki/Integrations#native-commenting-in-neovim-010
+-- using the builtin commenting functionality
+require("ts_context_commentstring").setup({
+    enable_autocmd = false,
+})
+
+local get_option = vim.filetype.get_option
+---@diagnostic disable-next-line: duplicate-set-field
+vim.filetype.get_option = function(filetype, option)
+    return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
+        or get_option(filetype, option)
+end
