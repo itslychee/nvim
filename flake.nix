@@ -55,6 +55,7 @@
                 ;
               inherit (pkgs)
                 lua-language-server
+                typescript-language-server
                 djlint
                 jq
                 yq
