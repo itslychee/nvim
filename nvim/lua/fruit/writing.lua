@@ -28,3 +28,6 @@ end, "select index 5")
 k(",", function()
     harpoon.ui:toggle_quick_menu(harpoon:list())
 end, "enter quick menu")
+
+-- I hate help
+vim.keymap.set({ "n", "v", "i" }, "<F1>", function() end)
