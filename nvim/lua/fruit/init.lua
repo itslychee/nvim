@@ -33,6 +33,12 @@ o.list = true
 o.autoindent = true
 o.listchars = "lead:.,tab:▎·,trail:."
 
+-- Thanks
+-- https://www.jackfranklin.co.uk/blog/code-folding-in-vim-neovim/
+o.foldmethod = "expr"
+o.foldenable = false
+o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
 vim.g.mapleader = " "
 
 require("fruit.snippets")
