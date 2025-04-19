@@ -29,6 +29,7 @@
         in
         rec {
           #
+          debug = full.override { debug = true; };
           base = pkgs.callPackage ./package.nix {
             neovim-unwrapped = inputs.nightly.packages.${pkgs.system}.default;
           };
