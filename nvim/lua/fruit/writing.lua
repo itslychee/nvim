@@ -1,5 +1,3 @@
-require("mini.pairs").setup({})
-
 local harpoon = require("harpoon")
 harpoon:setup()
 
