@@ -2,14 +2,12 @@
   # Neovim
   vimUtils,
   vimPlugins,
-  neovimUtils,
   neovim-unwrapped,
   wrapNeovimUnstable,
-  writeText,
   lib,
   # third party programs
   ripgrep,
-  nixfmt-rfc-style,
+  nixfmt,
   nil,
   # Extend the base derivation
   grammars ? vimPlugins.nvim-treesitter.withAllGrammars,
@@ -81,6 +79,6 @@ in
       # binaries that are convenient :3
       ripgrep
       nil
-      nixfmt-rfc-style
+      nixfmt
     ];
   }

@@ -1,26 +1,9 @@
 local api = vim.api
-local lspconfig = require("lspconfig")
 local k = vim.keymap.set
 
-local LSPs = {
-    "ccls",
-    "nil_ls",
-    "gopls",
-    "pyright",
-    "tinymist",
-    "ruff",
-    "ts_ls",
-    "eslint",
-    "rust_analyzer",
-}
 local caps = require("cmp_nvim_lsp").default_capabilities()
 -- local caps = require("blink.cmp").get_lsp_capabilities()
-
-for _, server in ipairs(LSPs) do
-    lspconfig[server].setup({
-        capabilities = caps,
-    })
-end
+vim.lsp.config("*", { capabilities = caps })
 
 vim.diagnostic.config({
     virtual_text = {},
@@ -92,7 +75,7 @@ require("typescript-tools").setup({
 })
 
 -- I hate guessing
-require("lspconfig").lua_ls.setup({
+vim.lsp.config("lua_ls", {
     capabilities = caps,
     on_init = function(client)
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {

@@ -31,7 +31,7 @@
           #
           debug = full.override { debug = true; };
           base = pkgs.callPackage ./package.nix {
-            neovim-unwrapped = inputs.nightly.packages.${pkgs.system}.default;
+            neovim-unwrapped = inputs.nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
           };
           full = minimal.override (prev: {
             extraPlugins =
@@ -41,21 +41,16 @@
                   which-key-nvim
                   nvim-web-devicons
                   nvim-colorizer-lua
-                  git-conflict-nvim
                   vim-fugitive
                   typescript-tools-nvim
-                  vim-jinja
                   harpoon2
                   ;
               });
             extraBinaries = attrValues {
-              inherit (pkgs.nodePackages_latest)
-                prettier
-                sql-formatter
-                jsonlint
-                ;
               inherit (pkgs)
                 lua-language-server
+                prettier
+                sql-formatter
                 typescript-language-server
                 djlint
                 jq
@@ -73,7 +68,7 @@
 
             };
           });
-          minimal = base.override (prev: {
+          minimal = base.override (_: {
             treesitter = pkgs.vimPlugins.nvim-treesitter.withGrammars (ps: [
               ps.nix
               ps.bash
@@ -92,6 +87,6 @@
         };
       });
       # Formatter
-      formatter = eachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      formatter = eachSystem (pkgs: pkgs.nixfmt);
     };
 }
